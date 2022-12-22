@@ -7,6 +7,7 @@ const volumeRange = document.querySelector('.volume-range');
 const volumeBar = document.querySelector('.volume-bar');
 const currentTime = document.querySelector('.time-elapsed');
 const duration = document.querySelector('.time-duration');
+const speed = document.querySelector('.player-speed');
 const fullscreenBtn = document.querySelector('.fullscreen');
 
 
@@ -65,7 +66,6 @@ function changeVolume(e) {
     }
     volumeBar.style.width = `${volume * 100}%`;
     video.volume = volume;
-    console.log(volume);
 
     //change icon depending on volume
     volumeIcon.className = '';
@@ -80,20 +80,27 @@ function changeVolume(e) {
 }
 
 //mute / unmute
-
 function toogleMute() {
+    volumeIcon.className = '';
     if (video.volume) {
         lastVolume = video.volume;
         video.volume = 0;
         volumeBar.style.width = 0;
+        volumeIcon.classList.add('fas', 'fa-volume-mute');
+        volumeIcon.setAttribute('title', 'Unmute');
     } else {
         video.volume = lastVolume;
         volumeBar.style.width = `${lastVolume * 100}%`;
+        volumeIcon.classList.add('fas', 'fa-volume-up');
+        volumeIcon.setAttribute('title', 'Mute');
     }
 }
 
 // Change Playback Speed -------------------- //
 
+function changeSpeed() {
+    video.playbackRate = speed.value;
+}
 
 
 // Fullscreen ------------------------------- //
@@ -110,4 +117,4 @@ video.addEventListener('canplay', updateProgress);
 progressRange.addEventListener('click', setProgress);
 volumeRange.addEventListener('click', changeVolume);
 volumeIcon.addEventListener('click', toogleMute);
-
+speed.addEventListener('change', changeSpeed);
